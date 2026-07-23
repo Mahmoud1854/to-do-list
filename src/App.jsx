@@ -9,9 +9,7 @@ import { useState,useEffect } from "react";
 export default function App() {
   
     const initialTodos = [
-      {
-        
-      }
+      
   ];
   // todo use state
   const [todos,setTodos] = useState(initialTodos);
