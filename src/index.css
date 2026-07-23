@@ -1,0 +1,14 @@
+@import "tailwindcss";
+/* ============ font face ============= */
+@font-face {
+    font-family: ReadeaxBold;
+    src: url("/public/fonts/ReadexPro-Bold.ttf");
+}
+@font-face {
+    font-family: ReadexBold;
+    src: url("/public/fonts/ReadexPro-SemiBold.ttf");
+}
+@font-face {
+    font-family: ReadexMedium;
+    src: url("/public/fonts/ReadexPro-Medium.ttf");
+}
