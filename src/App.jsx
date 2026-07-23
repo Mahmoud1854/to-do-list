@@ -11,10 +11,6 @@ export default function App() {
     const initialTodos = [
       {
         
-        id:uuidv4(),
-        title:"السلام عليكم",
-        details:new Date().toISOString(),
-        isCompleted:false
       }
   ];
   // todo use state
