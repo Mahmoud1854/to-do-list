@@ -5,7 +5,7 @@ import Todo from "./components/todo";
 // uuid
 import {v4 as uuidv4} from 'uuid';
 // usestate
-import { useState,useEffect } from "react";
+import { useState,useEffect,useMemo } from "react";
 export default function App() {
   
     const initialTodos = [
@@ -51,12 +51,19 @@ export default function App() {
        localStorage.setItem("todos" , JSON.stringify(updatedTodos))
     }
         // filtering todos 
-    const completedTodos = todos.filter((todo) =>{
+    // ======= completed todos fun ========  
+    const completedTodos = useMemo(() =>{
+     return todos.filter((todo) =>{
       return todo.isCompleted;
     })
-    const noneCompletedTodos = todos.filter((todo) =>{
+    }, [todos]);
+    // ======= completed todos fun ========  
+
+    const noneCompletedTodos =useMemo(() =>{
+      return todos.filter((todo) =>{
       return !todo.isCompleted;
     });
+    } , [todos])
 
     let todosToBeRendered = todos;
     if (todosType == "completed"){
