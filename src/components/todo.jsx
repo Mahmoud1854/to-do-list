@@ -13,8 +13,14 @@ export default function Todo({ todo, handleCheck, handleDelete,handleEdit }) {
   //   =================== handle edit clik =========
     const handleEditClick = () =>{
       const newTitle = prompt("ما هو اسم المهمه الجديد؟");
-      if (newTitle == null) return;
-      handleEdit(todo.id , newTitle)
+      if (newTitle == null){return;}
+      if (newTitle.trim() === ""){
+        alert("please enter a valid title");
+        return ; 
+      }else{
+        handleEdit(todo.id , newTitle);
+      }
+      
     }
   // ============= handle edit click ====================
   return (

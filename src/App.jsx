@@ -5,14 +5,16 @@ import Todo from "./components/todo";
 // uuid
 import {v4 as uuidv4} from 'uuid';
 // usestate
-import { useState,useEffect,useMemo } from "react";
+import { useState,useEffect,useMemo,useReducer } from "react";
+import TodosReducer from "./reducers/todosReducer";
 export default function App() {
   
     const initialTodos = [
       
   ];
   // todo use state
-  const [todos,setTodos] = useState(initialTodos);
+  const [todos , dispatch] = useReducer(TodosReducer, [])
+  const [todos2,setTodos] = useState(initialTodos);
   const [todosType, setTodosType] = useState("all")
   // ======
   // 
@@ -31,24 +33,21 @@ export default function App() {
     }
     //  ======================= hand check click fun ====================
     const handleDelete = (id) =>{
-      const updatedTodos = todos.filter((todo) =>{
-        return todo.id != id;
-
+      dispatch({
+        type:"delete",
+        payload:{
+          id:id
+        }
       })
-      setTodos(updatedTodos);
-       localStorage.setItem("todos" , JSON.stringify(updatedTodos))
     }
     const handleEdit = (id,newTitle) =>{
-      const updatedTodos = todos.map((todo) =>{
-        if (todo.id == id){
-          return {
-            ...todo,title:newTitle
-          };
-        };
-        return todo
-      });
-      setTodos(updatedTodos);
-       localStorage.setItem("todos" , JSON.stringify(updatedTodos))
+      dispatch({
+        type:"edit",
+        payload:{
+          id: id,
+          title:newTitle,
+        }
+      })
     }
         // filtering todos 
     // ======= completed todos fun ========  
@@ -80,28 +79,20 @@ export default function App() {
   const [titleInput, setTitleInput] = useState("");
   // button handle click function
     const handleAddClick = () =>{
-      const newTodo = {
-        
-        id:uuidv4(),
-        title:titleInput,
-        details:new Date().toISOString(),
-        isCompleted:false
-      };
-      if (newTodo.title.trim() == ""){return;}
-      else{
-        const updatedTodos = [...todos, newTodo]
-      setTodos(updatedTodos);
-      localStorage.setItem("todos" , JSON.stringify(updatedTodos))
-      setTitleInput("");
-      }
+      dispatch( {
+        type:"add",
+        payload:{
+          title:titleInput,
+        }
+      })
+     setTitleInput("");
+
     }
 
     useEffect(() => {
-      const localTodos = JSON.parse(localStorage.getItem("todos"));
-
-      if (localTodos) {
-        setTodos(localTodos);
-           }
+     dispatch({
+      type:"get",
+     })
 }, []);
   return (
     <div className="bg-[#1C0049] min-h-screen flex items-center justify-center">
